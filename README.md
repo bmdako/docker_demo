@@ -260,40 +260,7 @@ CONTAINER ID        IMAGE                       COMMAND             CREATED     
 
 Now visit (http:<server>/) to see if the app is running and responding.
 
-We're done.
-
-### Stopping containers and settting environment variables
-
-In the run command in step 3, we have omitted setting an environment variable.
-Since our little Node app uses the env _USERNAME_ if available, we might want to see how this works.
-
-Environment variables can only be set when executing a run command. So we need to run a new container.
-Because of port conflicts, we need to stop the previous container before we can start a new one.
-
-To stop the container, use `sudo docker stop 26bf1a66f318`.
-To see all containers, running and stopped, use `sudo docker ps -a`:
-
-```
-CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS                            PORTS               NAMES
-26bf1a66f318        bmdako/docker_demo:latest   node src/app.js     4 minutes ago       Exited (143) About a minute ago                       prickly_carson  
-```
-
-Now, run a new container using the following command:
-
-```
-sudo docker run \
---env=USERNAME=test \
---publish=80:8000 \
--d bmdako/docker_demo
-```
-
-The list of containers new looks like this:
-
-```
-CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS                       PORTS                  NAMES
-5ffb1fbd9c3d        bmdako/docker_demo:latest   node src/app.js     12 seconds ago      Up 11 seconds                0.0.0.0:80->8000/tcp   jovial_hopper       
-26bf1a66f318        bmdako/docker_demo:latest   node src/app.js     5 minutes ago       Exited (143) 2 minutes ago                          prickly_carson  
-```
+We're done. No more steps. But there's more to learn.
 
 ### Pulling new images
 
@@ -302,6 +269,47 @@ We need to pull the latest image by executing following command:
 
 ```
 sudo docker pull bmdako/docker_demo
+```
+
+After pulling a new image, we need to start a new container based on the new image.
+But because of port conflicts, we need to stop the previous container before we can run a new one. (Alternatively we can have multiple containers running on different ports.)
+
+### Stopping containers
+
+To stop the container, use:
+
+```
+sudo docker stop 26bf1a66f318
+```
+
+To see all containers, running and stopped, use `sudo docker ps -a`:
+
+```
+CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS                            PORTS               NAMES
+26bf1a66f318        bmdako/docker_demo:latest   node src/app.js     4 minutes ago       Exited (143) About a minute ago                       prickly_carson  
+```
+
+### Environment variables
+
+In the run command in step 3, we have omitted setting an environment variable.
+Since our little Node app uses the env _USERNAME_ if available, we might want to see how this works.
+
+Environment variables can only be set when executing a run command. So before running a new container, stop the old one.
+Now, run a new container using the following command with environment variable _USERNAME=test_:
+
+```
+sudo docker run \
+--env=USERNAME=test \
+--publish=80:8000 \
+-d bmdako/docker_demo
+```
+
+The list of containers now looks like this:
+
+```
+CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS                       PORTS                  NAMES
+5ffb1fbd9c3d        bmdako/docker_demo:latest   node src/app.js     12 seconds ago      Up 11 seconds                0.0.0.0:80->8000/tcp   jovial_hopper       
+26bf1a66f318        bmdako/docker_demo:latest   node src/app.js     5 minutes ago       Exited (143) 2 minutes ago                          prickly_carson  
 ```
 
 ### Remove old containers and images

@@ -237,7 +237,7 @@ Now
 ### Step 3: Run a container
 
 Next up is actually deploying and running a container based on an image. This is the cool part: We don't need to install anything but Docker.
-Docker downloads the image if it's not available locally. And because the image has our project and Node installed, there's nothing else we need to install. (Just make sure HCL has opened for outgoing HTTPS traffic from the server.)
+Docker downloads the image if it's not available locally. And because the image has our project and Node installed, there's nothing else we need to install. (Just make sure HCL has allowed outgoing HTTPS traffic from the server.)
 
 Use SSH to log into the server and run the following command:
 
@@ -256,10 +256,15 @@ CONTAINER ID        IMAGE                       COMMAND             CREATED     
 26bf1a66f318        bmdako/docker_demo:latest   node src/app.js     13 seconds ago      Up 13 seconds       0.0.0.0:80->8000/tcp   prickly_carson
 ```
 
-#### Environment variables
+Now visit (http:<server>/) to see if the app is running and responding.
 
-In the run command above, we have omitted setting an environment variable.
-Our little Node app, uses the env _USERNAME_ if available. So we might want to see how this works.
+We're done.
+
+### Stopping containers and settting environment variables
+
+In the run command in step 3, we have omitted setting an environment variable.
+Since our little Node app uses the env _USERNAME_ if available, we might want to see how this works.
+
 Environment variables can only be set when executing a run command. So we need to run a new container.
 Because of port conflicts, we need to stop the previous container before we can start a new one.
 
@@ -288,7 +293,7 @@ CONTAINER ID        IMAGE                       COMMAND             CREATED     
 26bf1a66f318        bmdako/docker_demo:latest   node src/app.js     5 minutes ago       Exited (143) 2 minutes ago                          prickly_carson  
 ```
 
-#### Pulling new image versions
+#### Pulling new images
 
 **Important**: When a new image has been build and pushed to the registry, this is not automatically downloaded to our server.
 We need to pull the latest image by executing following command:
@@ -297,15 +302,17 @@ We need to pull the latest image by executing following command:
 sudo docker pull bmdako/docker_demo
 ```
 
-### Optional step: Remove old containers and images
+### Remove old containers and images
 
-To delete an old container, use:
+Old containers and images are not deleted when we build, pull or run.
+
+E.g. on the server, we have an old container. To delete this, use:
 
 ```
 sudo docker rm 26bf1a66f318
 ```
 
-To delete an old image, use:
+E.g. on our build machine, we have an old image. To delete this, use:
 
 ```
 sudo docker rmi 40bcbe642c78

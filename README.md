@@ -6,16 +6,13 @@ It's a very simple way of doing it. No fancy scripts or custom logic. But it's a
 
 ### Step 0: Setup
 
-The Docker image is build locally and all dependencies are copied onto the image:
+The Docker image is build locally and all dependencies are copied onto the image. By dependencies I mean the entire `./src` and `./node_modules` directories are copied and Node is downloaded and installed.
 
-* The entire `./src` and `./node_modules` directories.
-* Node is downloaded and installed, so we don't need to install it on the servers.
-
-This means, to create the build, we need:
+This means, to create the build, we need to have:
 
 1. Docker installed.
-2. The code locally on my machine (eg. using git).
-3. The Node modules installed.
+2. The code downloaded locally (eg. using git).
+3. The project specific Node modules installed.
 
 
 Beside installing Docker, these are thing we do with any other project anyways:
@@ -39,7 +36,7 @@ To build a Docker image, use the following command:
 sudo docker build -t bmdako/docker_demo .
 ```
 
-Argument `-t` means we apply _bmdako/docker_demo_ as the image repository name. Optionally, we can add a tag to this name.
+Argument `-t` means we apply _bmdako/docker_demo_ as the image repository name. Optionally, we can also add a tag to this name.
 
 The output will look something like this:
 
@@ -204,14 +201,12 @@ Successfully built 40bcbe642c78
 
 ```
 
-Copying the code and Node modules onto the image has the important benefit that we know excatly what code get's deployed.
+Copying the code and Node modules onto the image has the important benefit that we know exactly what code get's deployed.
 
-But it also means we need to build a new image for every release. This is the reason why we apply a repository to the image.
-When subsequently building the images with the same repository name, the most recent image will be tagged as _latest_.
-To see all images on your system use `sudo docker images`.
+But it also means we need to build a new image for every release. This is the reason why we apply a repository to the image: When subsequently building the images with the same repository name, the most recent image will be tagged as _latest_.
+To see all images on your system use `sudo docker images`:
 
 ```
-dako@dako-ThinkPad-X220:~/Code/docker_demo$ sudo docker images
 REPOSITORY           TAG                 IMAGE ID            CREATED              VIRTUAL SIZE
 bmdako/docker_demo   latest              40bcbe642c78        About a minute ago   250.9 MB
 ```
@@ -220,7 +215,6 @@ If we apply some changes to the code, we need to build a new image by executing 
 Now the list of images looks like this:
 
 ```
-dako@dako-ThinkPad-X220:~/Code/docker_demo$ sudo docker images
 REPOSITORY           TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
 bmdako/docker_demo   latest              8e7d0730113d        2 seconds ago       250.9 MB
 <none>               <none>              40bcbe642c78        3 minutes ago       250.9 MB
@@ -230,7 +224,7 @@ bmdako/docker_demo   latest              8e7d0730113d        2 seconds ago      
 
 ### Step 2: Push a Docker image
 
-To be able to run an image on a different machine, I need to push the image to a registry. I have used [Docker Hub](https://hub.docker.com/). We can also use a self-hosted registry.
+To be able to run an image on a different machine, we need to push the image to a registry. I have used [Docker Hub](https://hub.docker.com/). We can also use a self-hosted registry.
 
 Below is the command to push the latest image from repository _bmdako/docker_demo_.
 
@@ -238,12 +232,12 @@ Below is the command to push the latest image from repository _bmdako/docker_dem
 sudo docker push bmdako/docker_demo
 ```
 
+Now
+
 ### Step 3: Run a container
 
 Next up is actually deploying and running a container based on an image. This is the cool part: We don't need to install anything but Docker.
-Docker downloads the image if it's not available locally. And because the image has Node installed and our code, there's nothing else we need to install.
-
-Just make sure that HCL has opened for HTTPS traffic from the server to the Docker Hub registry.
+Docker downloads the image if it's not available locally. And because the image has our project and Node installed, there's nothing else we need to install. (Just make sure HCL has opened for outgoing HTTPS traffic from the server.)
 
 Use SSH to log into the server and run the following command:
 
@@ -258,13 +252,14 @@ Argument `-d` means the container will run detached in the background.
 Now we have created and started a new container based on the image. To see a list of running containers, use `sudo docker ps`:
 
 ```
-dako@dako-ThinkPad-X220:~/Code/docker_demo$ sudo docker ps
 CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS              PORTS                  NAMES
 26bf1a66f318        bmdako/docker_demo:latest   node src/app.js     13 seconds ago      Up 13 seconds       0.0.0.0:80->8000/tcp   prickly_carson
 ```
 
-In the run command above, I have omitted setting an environment variable.
-Our little Node app, uses USERNAME env if available. So we might want to see how this works.
+#### Environment variables
+
+In the run command above, we have omitted setting an environment variable.
+Our little Node app, uses the env _USERNAME_ if available. So we might want to see how this works.
 Environment variables can only be set when executing a run command. So we need to run a new container.
 Because of port conflicts, we need to stop the previous container before we can start a new one.
 
@@ -272,7 +267,6 @@ To stop the container, use `sudo docker stop 26bf1a66f318`.
 To see all containers, running and stopped, use `sudo docker ps -a`:
 
 ```
-dako@dako-ThinkPad-X220:~/Code/docker_demo$ sudo docker ps -a
 CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS                            PORTS               NAMES
 26bf1a66f318        bmdako/docker_demo:latest   node src/app.js     4 minutes ago       Exited (143) About a minute ago                       prickly_carson  
 ```
@@ -289,13 +283,14 @@ sudo docker run \
 The list of containers new looks like this:
 
 ```
-dako@dako-ThinkPad-X220:~/Code/docker_demo$ sudo docker ps -a
 CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS                       PORTS                  NAMES
 5ffb1fbd9c3d        bmdako/docker_demo:latest   node src/app.js     12 seconds ago      Up 11 seconds                0.0.0.0:80->8000/tcp   jovial_hopper       
 26bf1a66f318        bmdako/docker_demo:latest   node src/app.js     5 minutes ago       Exited (143) 2 minutes ago                          prickly_carson  
 ```
 
-*Important*: When a new image has been build and pushed to the registry, this is not automatically downloaded to our server.
+#### Pulling new image versions
+
+**Important**: When a new image has been build and pushed to the registry, this is not automatically downloaded to our server.
 We need to pull the latest image by executing following command:
 
 ```

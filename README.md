@@ -222,6 +222,8 @@ bmdako/docker_demo   latest              8e7d0730113d        2 seconds ago      
 
 *Note* the repository and tag has been moved from the first image to the second.
 
+Now we're ready to run the container locally on our machine.
+
 ### Step 2: Push a Docker image
 
 To be able to run an image on a different machine, we need to push the image to a registry. I have used [Docker Hub](https://hub.docker.com/). We can also use a self-hosted registry.
@@ -232,7 +234,7 @@ Below is the command to push the latest image from repository _bmdako/docker_dem
 sudo docker push bmdako/docker_demo
 ```
 
-Now
+Now we're ready to deploy by running the container on a server.
 
 ### Step 3: Run a container
 
@@ -293,7 +295,7 @@ CONTAINER ID        IMAGE                       COMMAND             CREATED     
 26bf1a66f318        bmdako/docker_demo:latest   node src/app.js     5 minutes ago       Exited (143) 2 minutes ago                          prickly_carson  
 ```
 
-#### Pulling new images
+### Pulling new images
 
 **Important**: When a new image has been build and pushed to the registry, this is not automatically downloaded to our server.
 We need to pull the latest image by executing following command:

@@ -1,6 +1,6 @@
 ## Docker demo
 
-This is a simple demo project how I have used Docker to deploy my Node.js projects. It doesn't have to Node.js but could be any other platform. The process is the same.
+This is a simple demo project how I have used Docker to deploy my Node.js apps. It doesn't have to Node.js but could be any other platform. The process is the same.
 
 It's a very simple way of doing it. No fancy scripts or custom logic. But it's a place to start.
 
@@ -13,7 +13,7 @@ This means, to create the build, we need to have:
 
 1. Docker installed.
 2. The code downloaded locally (eg. using git).
-3. The project specific Node modules installed.
+3. The app specific Node modules installed.
 
 
 Beside installing Docker, these are thing we do with any other project anyways:
@@ -27,7 +27,7 @@ npm install
 Now we're ready to build an image.
 
 
-### Step 1: Build a Docker image
+### Step 1: Build an image
 
 The build command uses the `Dockerfile` in the project root.
 See [Dockerfile Reference](https://docs.docker.com/reference/builder/) and [Docker Command Line Reference](https://docs.docker.com/reference/commandline/cli/) for info on the commands used.
@@ -66,117 +66,7 @@ HTTP request sent, awaiting response... 200 OK
 Length: 5645609 (5.4M) [application/octet-stream]
 Saving to: 'STDOUT'
 
-     0K .......... .......... .......... .......... ..........  0% 7.41M 1s
-    50K .......... .......... .......... .......... ..........  1% 14.9M 1s
-   100K .......... .......... .......... .......... ..........  2% 21.0M 0s
-   150K .......... .......... .......... .......... ..........  3% 9.11M 0s
-   200K .......... .......... .......... .......... ..........  4%  484M 0s
-   250K .......... .......... .......... .......... ..........  5% 23.8M 0s
-   300K .......... .......... .......... .......... ..........  6% 42.1M 0s
-   350K .......... .......... .......... .......... ..........  7% 23.0M 0s
-   400K .......... .......... .......... .......... ..........  8% 20.3M 0s
-   450K .......... .......... .......... .......... ..........  9% 21.7M 0s
-   500K .......... .......... .......... .......... ..........  9% 66.9M 0s
-   550K .......... .......... .......... .......... .......... 10% 19.3M 0s
-   600K .......... .......... .......... .......... .......... 11% 27.9M 0s
-   650K .......... .......... .......... .......... .......... 12% 59.6M 0s
-   700K .......... .......... .......... .......... .......... 13% 65.1M 0s
-   750K .......... .......... .......... .......... .......... 14% 32.7M 0s
-   800K .......... .......... .......... .......... .......... 15% 31.4M 0s
-   850K .......... .......... .......... .......... .......... 16% 63.8M 0s
-   900K .......... .......... .......... .......... .......... 17% 31.6M 0s
-   950K .......... .......... .......... .......... .......... 18% 33.3M 0s
-  1000K .......... .......... .......... .......... .......... 19% 13.3M 0s
-  1050K .......... .......... .......... .......... .......... 19% 38.1M 0s
-  1100K .......... .......... .......... .......... .......... 20% 51.1M 0s
-  1150K .......... .......... .......... .......... .......... 21% 35.4M 0s
-  1200K .......... .......... .......... .......... .......... 22% 60.9M 0s
-  1250K .......... .......... .......... .......... .......... 23% 45.1M 0s
-  1300K .......... .......... .......... .......... .......... 24% 32.5M 0s
-  1350K .......... .......... .......... .......... .......... 25% 37.4M 0s
-  1400K .......... .......... .......... .......... .......... 26% 33.7M 0s
-  1450K .......... .......... .......... .......... .......... 27%  181M 0s
-  1500K .......... .......... .......... .......... .......... 28% 27.4M 0s
-  1550K .......... .......... .......... .......... .......... 29% 32.6M 0s
-  1600K .......... .......... .......... .......... .......... 29% 29.9M 0s
-  1650K .......... .......... .......... .......... .......... 30%  114M 0s
-  1700K .......... .......... .......... .......... .......... 31% 18.1M 0s
-  1750K .......... .......... .......... .......... .......... 32% 22.0M 0s
-  1800K .......... .......... .......... .......... .......... 33% 77.9M 0s
-  1850K .......... .......... .......... .......... .......... 34%  220M 0s
-  1900K .......... .......... .......... .......... .......... 35% 37.3M 0s
-  1950K .......... .......... .......... .......... .......... 36% 54.7M 0s
-  2000K .......... .......... .......... .......... .......... 37% 36.6M 0s
-  2050K .......... .......... .......... .......... .......... 38% 45.6M 0s
-  2100K .......... .......... .......... .......... .......... 38% 25.2M 0s
-  2150K .......... .......... .......... .......... .......... 39% 25.6M 0s
-  2200K .......... .......... .......... .......... .......... 40% 25.7M 0s
-  2250K .......... .......... .......... .......... .......... 41% 36.1M 0s
-  2300K .......... .......... .......... .......... .......... 42% 18.2M 0s
-  2350K .......... .......... .......... .......... .......... 43% 21.2M 0s
-  2400K .......... .......... .......... .......... .......... 44% 46.5M 0s
-  2450K .......... .......... .......... .......... .......... 45% 30.8M 0s
-  2500K .......... .......... .......... .......... .......... 46% 19.9M 0s
-  2550K .......... .......... .......... .......... .......... 47% 20.8M 0s
-  2600K .......... .......... .......... .......... .......... 48% 39.0M 0s
-  2650K .......... .......... .......... .......... .......... 48% 17.8M 0s
-  2700K .......... .......... .......... .......... .......... 49% 68.3M 0s
-  2750K .......... .......... .......... .......... .......... 50% 15.7M 0s
-  2800K .......... .......... .......... .......... .......... 51%  691K 0s
-  2850K .......... .......... .......... .......... .......... 52%  487K 0s
-  2900K .......... .......... .......... .......... .......... 53%  581K 0s
-  2950K .......... .......... .......... .......... .......... 54% 2.46M 0s
-  3000K .......... .......... .......... .......... .......... 55%  488K 0s
-  3050K .......... .......... .......... .......... .......... 56%  487K 0s
-  3100K .......... .......... .......... .......... .......... 57%  482K 1s
-  3150K .......... .......... .......... .......... .......... 58%  580K 1s
-  3200K .......... .......... .......... .......... .......... 58%  587K 1s
-  3250K .......... .......... .......... .......... .......... 59% 1.27M 1s
-  3300K .......... .......... .......... .......... .......... 60%  485K 1s
-  3350K .......... .......... .......... .......... .......... 61%  486K 1s
-  3400K .......... .......... .......... .......... .......... 62%  596K 1s
-  3450K .......... .......... .......... .......... .......... 63%  504K 1s
-  3500K .......... .......... .......... .......... .......... 64% 1.98M 1s
-  3550K .......... .......... .......... .......... .......... 65%  485K 1s
-  3600K .......... .......... .......... .......... .......... 66%  484K 1s
-  3650K .......... .......... .......... .......... .......... 67%  582K 1s
-  3700K .......... .......... .......... .......... .......... 68%  516K 1s
-  3750K .......... .......... .......... .......... .......... 68% 1.94M 1s
-  3800K .......... .......... .......... .......... .......... 69%  489K 1s
-  3850K .......... .......... .......... .......... .......... 70%  487K 1s
-  3900K .......... .......... .......... .......... .......... 71%  578K 1s
-  3950K .......... .......... .......... .......... .......... 72%  516K 1s
-  4000K .......... .......... .......... .......... .......... 73% 1.93M 1s
-  4050K .......... .......... .......... .......... .......... 74%  471K 1s
-  4100K .......... .......... .......... .......... .......... 75%  479K 1s
-  4150K .......... .......... .......... .......... .......... 76%  619K 1s
-  4200K .......... .......... .......... .......... .......... 77%  512K 1s
-  4250K .......... .......... .......... .......... .......... 77% 1.66M 1s
-  4300K .......... .......... .......... .......... .......... 78%  485K 1s
-  4350K .......... .......... .......... .......... .......... 79%  490K 1s
-  4400K .......... .......... .......... .......... .......... 80%  613K 1s
-  4450K .......... .......... .......... .......... .......... 81%  505K 1s
-  4500K .......... .......... .......... .......... .......... 82% 1.73M 1s
-  4550K .......... .......... .......... .......... .......... 83%  463K 1s
-  4600K .......... .......... .......... .......... .......... 84%  518K 1s
-  4650K .......... .......... .......... .......... .......... 85%  611K 1s
-  4700K .......... .......... .......... .......... .......... 86%  506K 1s
-  4750K .......... .......... .......... .......... .......... 87% 1.47M 1s
-  4800K .......... .......... .......... .......... .......... 87%  484K 0s
-  4850K .......... .......... .......... .......... .......... 88%  521K 0s
-  4900K .......... .......... .......... .......... .......... 89%  610K 0s
-  4950K .......... .......... .......... .......... .......... 90%  491K 0s
-  5000K .......... .......... .......... .......... .......... 91% 1.53M 0s
-  5050K .......... .......... .......... .......... .......... 92%  489K 0s
-  5100K .......... .......... .......... .......... .......... 93%  520K 0s
-  5150K .......... .......... .......... .......... .......... 94%  615K 0s
-  5200K .......... .......... .......... .......... .......... 95%  491K 0s
-  5250K .......... .......... .......... .......... .......... 96%  507K 0s
-  5300K .......... .......... .......... .......... .......... 97% 1.38M 0s
-  5350K .......... .......... .......... .......... .......... 97%  485K 0s
-  5400K .......... .......... .......... .......... .......... 98%  520K 0s
-  5450K .......... .......... .......... .......... .......... 99% 7.06K 0s
-  5500K .......... ...                                        100% 3.80M=12s
+     [...] DOWNLOADING NODE [...]
 
 2015-01-06 09:31:01 (475 KB/s) - written to stdout [5645609/5645609]
 
@@ -204,15 +94,20 @@ Successfully built 40bcbe642c78
 
 ```
 
-Copying the code and Node modules onto the image has the important benefit that we know exactly what code get's deployed.
-
-But it also means we need to build a new image for every release. This is the reason why we apply a repository to the image: When subsequently building the images with the same repository name, the most recent image will be tagged as _latest_.
 To see all images on your system use `sudo docker images`:
 
 ```
 REPOSITORY           TAG                 IMAGE ID            CREATED              VIRTUAL SIZE
 bmdako/docker_demo   latest              40bcbe642c78        About a minute ago   250.9 MB
 ```
+
+Now we're ready to run the container locally on our machine.
+
+
+#### Updating the code
+
+Copying the code and Node modules onto the image has the important benefit that we know exactly what code get's deployed.
+But it also means we need to build a new image for every release. This is the reason why we apply a repository to the image: When subsequently building images with the same repository name, only the most recent image will be tagged as _latest_.
 
 If we apply some changes to the code, we need to build a new image by executing the exact same command as before.
 Now the list of images looks like this:
@@ -223,42 +118,41 @@ bmdako/docker_demo   latest              8e7d0730113d        2 seconds ago      
 <none>               <none>              40bcbe642c78        3 minutes ago       250.9 MB
 ```
 
-*Note* the repository and tag has been moved from the first image to the second.
-
-Now we're ready to run the container locally on our machine.
+*Note* the repository and tag has been removed from the first image.
 
 
-### Step 2: Push a Docker image
+### Step 2: Push an image
 
 To be able to run an image on a different machine, we need to push the image to a registry. I have used [Docker Hub](https://hub.docker.com/). We can also use a self-hosted registry.
 
-Below is the command to push the latest image from repository _bmdako/docker_demo_.
+The command below pushes the latest image from repository _bmdako/docker_demo_ locally to Docker Hub.
 
 ```
 sudo docker push bmdako/docker_demo
 ```
 
-Now we're ready to deploy by running the container on a server.
+Now we're ready to deploy our app by running a container on a server.
 
 
 ### Step 3: Run a container
 
-Next up is actually deploying and running a container based on an image. This is the cool part: We don't need to install anything but Docker.
-Docker downloads the image if it's not available locally. And because the image has our project and Node installed, there's nothing else we need to install. (Just make sure HCL has allowed outgoing HTTPS traffic from the server.)
+Running a container is the cool part: We only need to install Docker. (Our code and Node are already contained on the image.)
+Docker downloads the image if it's not available locally. (Just make sure HCL has allowed outgoing HTTPS traffic from the server. Otherwise we can't download our image.)
 
-Use SSH to log into the server and run the following command:
+Log into the server and run the following command:
 
 ```
 sudo docker run --publish=80:8000 -d bmdako/docker_demo
 ```
 
-Now visit (http:<server>/) to see if the app is running and responding.
+Now we have created and started a new container based on our image. 
+Visit (http:<server>/) to see if the app is running.
 
-Command `run` is shorthand for `create` and `start`.
+Command `run` is shorthand for `create` and `start` a new container.
 Argument `--publish` means we map the container port to the host. See EXPOSE in the `Dockerfile`.
 Argument `-d` means the container will run detached in the background.
 
-Now we have created and started a new container based on the image. To see a list of running containers, use `sudo docker ps`:
+To see a list of running containers, use `sudo docker ps`:
 
 ```
 CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS              PORTS                  NAMES

@@ -1,3 +1,4 @@
+# We're using ubuntu 14.04 as a base for the image
 FROM ubuntu:14.04
 
 MAINTAINER Daniel Kokott <dako@berlingskemedia.dk>

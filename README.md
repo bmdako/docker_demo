@@ -41,59 +41,6 @@ sudo docker build -t bmdako/docker_demo .
 Argument `-t` means we apply _bmdako/docker_demo_ as the image repository name. This will be useful when making new images later.
 (Optionally, we can add a custom tag instead of the default _latest_.)
 
-The output will look something like this:
-
-```
-Sending build context to Docker daemon 8.568 MB
-Sending build context to Docker daemon 
-Step 0 : FROM ubuntu:14.04
- ---> 5506de2b643b
-Step 1 : MAINTAINER Daniel Kokott <dako@berlingskemedia.dk>
- ---> Using cache
- ---> d89454e0db0c
-Step 2 : RUN apt-get update
- ---> Using cache
- ---> c684b04174d5
-Step 3 : RUN apt-get install -y wget
- ---> Using cache
- ---> 4029412b556c
-Step 4 : RUN wget -O - http://nodejs.org/dist/v0.10.33/node-v0.10.33-linux-x64.tar.gz    | tar xzf - --strip-components=1 --exclude="README.md" --exclude="LICENSE"    --exclude="ChangeLog" -C "/usr/local"
- ---> Running in 5bd9b92d3c22
---2015-01-06 09:30:44--  http://nodejs.org/dist/v0.10.33/node-v0.10.33-linux-x64.tar.gz
-Resolving nodejs.org (nodejs.org)... 165.225.133.150
-Connecting to nodejs.org (nodejs.org)|165.225.133.150|:80... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 5645609 (5.4M) [application/octet-stream]
-Saving to: 'STDOUT'
-
-     [...] DOWNLOADING NODE [...]
-
-2015-01-06 09:31:01 (475 KB/s) - written to stdout [5645609/5645609]
-
- ---> 22dce137dafb
-Removing intermediate container 5bd9b92d3c22
-Step 5 : WORKDIR /docker_demo
- ---> Running in 6e9f7dd8e27b
- ---> 276e433485cf
-Removing intermediate container 6e9f7dd8e27b
-Step 6 : COPY ./src /docker_demo/src
- ---> 80e05e31af8f
-Removing intermediate container 192ca58a3ec1
-Step 7 : COPY ./node_modules /docker_demo/node_modules
- ---> a6e8650f94a3
-Removing intermediate container 5b11e7c9acf6
-Step 8 : EXPOSE  8000
- ---> Running in e02e0f69e108
- ---> e5a8d57a2b8f
-Removing intermediate container e02e0f69e108
-Step 9 : CMD ["node", "src/app.js"]
- ---> Running in 7f5cb3082ffd
- ---> 40bcbe642c78
-Removing intermediate container 7f5cb3082ffd
-Successfully built 40bcbe642c78
-
-```
-
 To see all images on your system use `sudo docker images`:
 
 ```

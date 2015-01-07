@@ -5,11 +5,11 @@ This is a simple demo project how I have used Docker to deploy my Node.js apps. 
 It's a very simple way of doing it. No fancy scripts or custom logic. But it's a place to start.
 
 
-### Step 0: Setup
+### Step 0: Preparations
 
 The Docker image is build locally and all dependencies are copied onto the image. By dependencies I mean the entire `./src` and `./node_modules` directories are copied and Node is downloaded and installed.
 
-This means, to create the build, we need to have:
+This means, to create the image for this demo app, we need to have:
 
 1. Docker installed.
 2. The code downloaded locally (eg. using git).
@@ -29,10 +29,9 @@ Now we're ready to build an image.
 
 ### Step 1: Build an image
 
-The build command uses the `Dockerfile` in the project root.
-See [Dockerfile Reference](https://docs.docker.com/reference/builder/) and [Docker Command Line Reference](https://docs.docker.com/reference/commandline/cli/) for info on the commands used.
+The build command uses the `Dockerfile`, located in the project root, where it's specified what base image we're using, whats gets installed and copied onto the image, what TCP/IP ports we want to expose, what command will get executed when running a container from the image etc.
 
-To build a Docker image, use the following command:
+To build a image, use the following command:
 
 ```
 sudo docker build -t bmdako/docker_demo .
@@ -49,23 +48,6 @@ bmdako/docker_demo   latest              40bcbe642c78        About a minute ago 
 ```
 
 Now we're ready to run the container locally on our machine.
-
-
-#### Updating the code
-
-Copying the code and Node modules onto the image has the important benefit that we know exactly what code get's deployed.
-But it also means we need to build a new image for every release. This is the reason why we apply a repository to the image: When subsequently building images with the same repository name, only the most recent image will be tagged as _latest_.
-
-If we apply some changes to the code, we need to build a new image by executing the exact same command as before.
-Now the list of images looks like this:
-
-```
-REPOSITORY           TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-bmdako/docker_demo   latest              8e7d0730113d        2 seconds ago       250.9 MB
-<none>               <none>              40bcbe642c78        3 minutes ago       250.9 MB
-```
-
-*Note* the repository and tag has been removed from the first image.
 
 
 ### Step 2: Push an image
@@ -107,6 +89,25 @@ CONTAINER ID        IMAGE                       COMMAND             CREATED     
 ```
 
 We're done. No more steps. But there's more to learn.
+
+
+### Updating the code
+
+Copying the code and Node modules onto the image has the important benefit that we know exactly what code get's deployed.
+But it also means we need to build a new image for every release. This is the reason why we apply a repository to the image: When subsequently building images with the same repository name, only the most recent image will be tagged as _latest_.
+
+If we apply some changes to the code, we need to build a new image by executing the exact same command as before.
+Now the list of images looks like this:
+
+```
+REPOSITORY           TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+bmdako/docker_demo   latest              8e7d0730113d        2 seconds ago       250.9 MB
+<none>               <none>              40bcbe642c78        3 minutes ago       250.9 MB
+```
+
+*Note* the repository and tag has been removed from the first image.
+
+Remember to push new images to the registry. Do this with the exact same command as before. The latest image in the repository will get pushed.
 
 
 ### Pulling new images

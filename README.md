@@ -1,8 +1,9 @@
 ## Docker demo
 
-This is a simple demo project how I have used Docker to deploy my Node.js projects.
+This is a simple demo project how I have used Docker to deploy my Node.js projects. It doesn't have to Node.js but could be any other platform. The process is the same.
 
 It's a very simple way of doing it. No fancy scripts or custom logic. But it's a place to start.
+
 
 ### Step 0: Setup
 
@@ -25,6 +26,7 @@ npm install
 
 Now we're ready to build an image.
 
+
 ### Step 1: Build a Docker image
 
 The build command uses the `Dockerfile` in the project root.
@@ -36,7 +38,8 @@ To build a Docker image, use the following command:
 sudo docker build -t bmdako/docker_demo .
 ```
 
-Argument `-t` means we apply _bmdako/docker_demo_ as the image repository name. Optionally, we can also add a tag to this name.
+Argument `-t` means we apply _bmdako/docker_demo_ as the image repository name. This will be useful when making new images later.
+(Optionally, we can add a custom tag instead of the default _latest_.)
 
 The output will look something like this:
 
@@ -224,6 +227,7 @@ bmdako/docker_demo   latest              8e7d0730113d        2 seconds ago      
 
 Now we're ready to run the container locally on our machine.
 
+
 ### Step 2: Push a Docker image
 
 To be able to run an image on a different machine, we need to push the image to a registry. I have used [Docker Hub](https://hub.docker.com/). We can also use a self-hosted registry.
@@ -236,6 +240,7 @@ sudo docker push bmdako/docker_demo
 
 Now we're ready to deploy by running the container on a server.
 
+
 ### Step 3: Run a container
 
 Next up is actually deploying and running a container based on an image. This is the cool part: We don't need to install anything but Docker.
@@ -247,7 +252,9 @@ Use SSH to log into the server and run the following command:
 sudo docker run --publish=80:8000 -d bmdako/docker_demo
 ```
 
-Command `run` is shorthand for `docker create` and `docker start`.
+Now visit (http:<server>/) to see if the app is running and responding.
+
+Command `run` is shorthand for `create` and `start`.
 Argument `--publish` means we map the container port to the host. See EXPOSE in the `Dockerfile`.
 Argument `-d` means the container will run detached in the background.
 
@@ -258,9 +265,8 @@ CONTAINER ID        IMAGE                       COMMAND             CREATED     
 26bf1a66f318        bmdako/docker_demo:latest   node src/app.js     13 seconds ago      Up 13 seconds       0.0.0.0:80->8000/tcp   prickly_carson
 ```
 
-Now visit (http:<server>/) to see if the app is running and responding.
-
 We're done. No more steps. But there's more to learn.
+
 
 ### Pulling new images
 
@@ -273,6 +279,7 @@ sudo docker pull bmdako/docker_demo
 
 After pulling a new image, we need to start a new container based on the new image.
 But because of port conflicts, we need to stop the previous container before we can run a new one. (Alternatively we can have multiple containers running on different ports.)
+
 
 ### Stopping containers
 
@@ -288,6 +295,7 @@ To see all containers, running and stopped, use `sudo docker ps -a`:
 CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS                            PORTS               NAMES
 26bf1a66f318        bmdako/docker_demo:latest   node src/app.js     4 minutes ago       Exited (143) About a minute ago                       prickly_carson  
 ```
+
 
 ### Environment variables
 
@@ -311,6 +319,26 @@ CONTAINER ID        IMAGE                       COMMAND             CREATED     
 5ffb1fbd9c3d        bmdako/docker_demo:latest   node src/app.js     12 seconds ago      Up 11 seconds                0.0.0.0:80->8000/tcp   jovial_hopper       
 26bf1a66f318        bmdako/docker_demo:latest   node src/app.js     5 minutes ago       Exited (143) 2 minutes ago                          prickly_carson  
 ```
+
+
+### Adding tags to images
+
+When build images, we can add a custom tag. Below I build two images but with different tags:
+
+```
+sudo docker build -t bmdako/docker_demo:v1 .
+sudo docker build -t bmdako/docker_demo:v2 .
+```
+
+Before, when building new images without a custom tag, only the most recent images was tagged _latest_ and the repository name was removed from older version.
+But now, when listing images (`sudo docker images`), both images have the repository name and can be pushed/pulled separately.
+
+```
+REPOSITORY           TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+bmdako/docker_demo   v2                  4d9e6c8cd26c        4 seconds ago       250.9 MB
+bmdako/docker_demo   v1                  49b55c28a924        34 seconds ago      250.9 MB
+```
+
 
 ### Remove old containers and images
 

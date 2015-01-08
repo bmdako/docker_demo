@@ -197,3 +197,22 @@ E.g. on our build machine, we have an old image. To delete this, use:
 ```
 sudo docker rmi 40bcbe642c78
 ```
+
+### Create new images based on a container
+
+Besides being very useful for running other peoples app with wierd dependencies in a walled of environment, containers can also be used to create images.
+Use the `commit` command to commit a copy of a container to a new image.
+
+E.g. you can start a new container with the following command:
+
+```
+sudo docker run --name=carlsens_project -t -i ubuntu:14.04 /bin/bash
+```
+
+Do your work on the container and commit to a new image using:
+
+```
+sudo docker commit -m="Did some cool stuff" -a="Daniel Kokott" 0b2616b0e5a8 bmdako/carlsens_project
+```
+
+See more on [Updating and committing an image](https://docs.docker.com/userguide/dockerimages/#updating-and-committing-an-image).

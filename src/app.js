@@ -1,23 +1,14 @@
 var Hapi = require('hapi');
 
-var server = new Hapi.Server(),
-    username = process.env.USERNAME;
-
+var server = new Hapi.Server();
 server.connection({ port: 8000 });
 
 server.route({
   method: 'GET',
-  path: '/',
+  path: '/{name*}',
   handler: function (request, reply) {
-    reply('Hello, ' + (username !== undefined ? username : 'world') + '!');
-  }
-});
-
-server.route({
-  method: 'GET',
-  path: '/{name}',
-  handler: function (request, reply) {
-    reply('Hello, ' + (username !== undefined ? username : encodeURIComponent(request.params.name)) + '!');
+    reply('Hello, ' + (process.env.USERNAME ? process.env.USERNAME :
+      request.params.name ? encodeURIComponent(request.params.name) : 'world') + '!');
   }
 });
 
